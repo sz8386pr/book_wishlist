@@ -90,6 +90,15 @@ def set_read(book_id, read):
     for book in book_list:
 
         if book.id == book_id:
+            while True:
+                try:
+                    rating = int(input("Enter the book rating from 0 to 5: "))
+                    if rating >= 0 or rating <= 5:
+                        book.rating = rating
+                        break
+                except ValueError:
+                    print("Enter numbers only")
+
             book.read = True
             return True
 

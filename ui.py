@@ -28,6 +28,7 @@ def sort_by():
             1. Book ID
             2. Book title
             3. Book author
+            4. Book rating
         ''')
 
         choice = input('Enter your selection: ')
@@ -38,6 +39,8 @@ def sort_by():
             return "title"
         elif choice == "3":
             return "author"
+        elif choice == "4":
+            return "rating"
         else:
             message('Please enter a valid selection')
 

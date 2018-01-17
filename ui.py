@@ -62,7 +62,10 @@ def sorted_list(books):
     reference from https://stackoverflow.com/questions/4010322/sort-a-list-of-class-instances-python for sort a list of class instances'''
 
     sort = sort_by() # Get the sort option
-    ordered_books = sorted(books, key=operator.attrgetter(sort)) # Sort by id/title/author. Original list is unaltered by using sorted() method
+    if sort == "rating":
+        ordered_books = sorted(books, key=operator.attrgetter(sort), reverse=True) #sort descendingly if sorted by rating
+    else:
+        ordered_books = sorted(books, key=operator.attrgetter(sort)) # Sort by id/title/author. Original list is unaltered by using sorted() method
 
     for book in ordered_books:
         print(book)

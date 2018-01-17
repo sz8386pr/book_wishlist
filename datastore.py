@@ -127,7 +127,10 @@ def make_output_data():
     return all_books_string
 
 def delete_book(book_id):
+    ''' delete book by book_id '''
+    
     global book_list
+
     for book in book_list:
 
         if book.id == book_id:

@@ -56,6 +56,7 @@ def new_book():
     ui.message('Book added: ' + str(new_book))
 
 def delete_book():
+    ''' Get book_id from user, delete book if found '''
     book_id = ui.ask_for_book_id()
     if datastore.delete_book(book_id):
         ui.message('Successfully deleted')

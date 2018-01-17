@@ -44,7 +44,7 @@ def shutdown():
     try:
         os.mkdir(DATA_DIR)
     except FileExistsError:
-        pass # Ignore - if directory exists, don't need to do anything. 
+        pass # Ignore - if directory exists, don't need to do anything.
 
     with open(BOOKS_FILE_NAME, 'w') as f:
         f.write(output_data)
@@ -125,3 +125,13 @@ def make_output_data():
     all_books_string = '\n'.join(output_data)
 
     return all_books_string
+
+def delete_book(book_id):
+    global book_list
+    for book in book_list:
+
+        if book.id == book_id:
+            book_list.remove(book)
+            return True
+
+    return False # return False if book id is not found

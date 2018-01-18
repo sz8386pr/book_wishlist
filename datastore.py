@@ -1,4 +1,5 @@
-
+''' json related code reference from http://stackabuse.com/reading-and-writing-json-to-a-file-in-python/ '''
+import json
 import os
 from book import Book
 
@@ -6,7 +7,7 @@ DATA_DIR = 'data'
 BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
 COUNTER_FILE_NAME = os.path.join(DATA_DIR, 'counter.txt')
 
-separator = '^^^'  # a string probably not in any valid data relating to a book
+#separator = '^^^'  # a string probably not in any valid data relating to a book
 
 book_list = []
 counter = 0
@@ -18,7 +19,8 @@ def setup():
 
     try :
         with open(BOOKS_FILE_NAME) as f:
-            data = f.read()
+            # data = f.read()
+            data = json.load(f)
             make_book_list(data)
     except FileNotFoundError:
         # First time program has run. Assume no books.
@@ -47,7 +49,8 @@ def shutdown():
         pass # Ignore - if directory exists, don't need to do anything.
 
     with open(BOOKS_FILE_NAME, 'w') as f:
-        f.write(output_data)
+        # f.write(output_data)
+        json.dump(output_data, f)
 
     with open(COUNTER_FILE_NAME, 'w') as f:
         f.write(str(counter))
@@ -106,17 +109,22 @@ def set_read(book_id, read):
 
 
 
-def make_book_list(string_from_file):
+def make_book_list(data):
     ''' turn the string from the file into a list of Book objects'''
 
     global book_list
 
-    books_str = string_from_file.split('\n')
+    # books_str = string_from_file.split('\n')
+    #
+    # for book_str in books_str:
+    #     data = book_str.split(separator)
+    #     book = Book(data[0], data[1], data[2] == 'True', int(data[3]))
+    #     book_list.append(book)
 
-    for book_str in books_str:
-        data = book_str.split(separator)
-        book = Book(data[0], data[1], data[2] == 'True', int(data[3]))
+    for info in data["book"]:
+        book = Book(info["title"], info["author"], info["book"], info["id"], info["rating"])
         book_list.append(book)
+
 
 
 def make_output_data():
@@ -124,16 +132,26 @@ def make_output_data():
 
     global book_list
 
-    output_data = []
+    #     output_data = []
+    #
+    #     for book in book_list:
+    #         output = [ book.title, book.author, str(book.read), str(book.id) ]
+    #         output_str = separator.join(output)
+    #         output_data.append(output_str)
+    #
+    #     all_books_string = '\n'.join(output_data)
+    #
+    #     return all_books_string
+
+    output_data = {}
+    output_data["book"] = []
 
     for book in book_list:
-        output = [ book.title, book.author, str(book.read), str(book.id) ]
-        output_str = separator.join(output)
-        output_data.append(output_str)
+        output_data["book"].append({"title": book.title, "author": book.author,
+        "book": book.read, "id": book.id, "rating": book.rating})
 
-    all_books_string = '\n'.join(output_data)
+    return output_data
 
-    return all_books_string
 
 
 def delete_book(book_id):

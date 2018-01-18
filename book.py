@@ -4,14 +4,16 @@ class Book:
 
     NO_ID = -1
     NO_RATING = -1
+    NO_FINISHED = ''
 
-    def __init__(self, title, author, read=False, id=NO_ID, rating=NO_RATING):
+    def __init__(self, title, author, read=False, id=NO_ID, rating=NO_RATING, finished=NO_FINISHED):
         '''Default book is unread, and has no ID'''
         self.title = title
         self.author = author
         self.read = read
-        self.id=id
+        self.id = id
         self.rating = rating
+        self.finished = finished
 
 
     def set_id(self, id):
@@ -19,6 +21,9 @@ class Book:
 
     def set_rating(self, rating):
         self.rating = rating
+
+    def set_finished(self, finished):
+        self.finished = finished
 
     def __str__(self):
         read_str = 'no'
@@ -40,9 +45,13 @@ class Book:
             for i in range(5-rating):
                 rating_str += "☆"
 
-        template = 'id: {} Title: {} Author: {} Read: {} Rating: {}'
-        return template.format(id_str, self.title, self.author, read_str, rating_str)
+        finished_str = self.finished
+        if finished_str == '':
+            finished_str = ('(n/a)')
+
+        template = 'id: {} Title: {} Author: {} Read: {} Rating: {} Finished On: {}'
+        return template.format(id_str, self.title, self.author, read_str, rating_str, finished_str)
 
 
     def __eq__(self, other):
-        return self.title == other.title and self.author == other.author and self.read == other.read and self.id==other.id and self.rating == other.rating
+        return self.title == other.title and self.author == other.author and self.read == other.read and self.id==other.id and self.rating == other.rating and self.finished == other.finished

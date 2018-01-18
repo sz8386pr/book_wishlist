@@ -2,6 +2,7 @@
 import json
 import os
 from book import Book
+from datetime import datetime
 
 DATA_DIR = 'data'
 BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
@@ -86,7 +87,8 @@ def generate_id():
 
 
 def set_read(book_id, read):
-    '''Update book with given book_id to read. Return True if book is found in DB and update is made, False otherwise.'''
+    '''Update book with given book_id to read and save the date finished by month-day-year.
+    Return True if book is found in DB and update is made, False otherwise.'''
 
     global book_list
 
@@ -102,7 +104,11 @@ def set_read(book_id, read):
                 except ValueError:
                     print("Enter numbers only")
 
-            book.read = True
+            book.read = read
+
+            finished = datetime.now().date().strftime('%m-%d-20%y')
+            book.finished = finished
+
             return True
 
     return False # return False if book id is not found
@@ -122,7 +128,7 @@ def make_book_list(data):
     #     book_list.append(book)
 
     for info in data["book"]:
-        book = Book(info["title"], info["author"], info["book"], info["id"], info["rating"])
+        book = Book(info["title"], info["author"], info["book"], info["id"], info["rating"], info["finished"])
         book_list.append(book)
 
 
@@ -148,7 +154,7 @@ def make_output_data():
 
     for book in book_list:
         output_data["book"].append({"title": book.title, "author": book.author,
-        "book": book.read, "id": book.id, "rating": book.rating})
+        "book": book.read, "id": book.id, "rating": book.rating, "finished": book.finished})
 
     return output_data
 

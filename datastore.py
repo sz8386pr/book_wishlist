@@ -162,14 +162,27 @@ def edit_book(book_id):
 
         if book.id == book_id:
             print("Current book - Author: {} Title: {}\n".format(book.author, book.title))
-            edit_author = input("Would you like to edit the Author? (Y or N)")
-            if edit_author == 'Y' or 'y':
-                new_author = input("Enter new author: ")
-                book.author = new_author
-            edit_title = input("Would you like to edit the Title? (Y or N)")
-            if edit_title == 'Y' or 'y':
-                new_title = input("Enter new title: ")
-                book.title = new_title
+
+            edit_author = ""
+            while not (edit_author.upper() == "Y" or edit_author.upper() == "N"):
+                edit_author = input("Would you like to edit the author? (Y or N)")
+                if edit_author.upper() == 'Y':
+                    new_author = input("Enter new author: ")
+                    book.author = new_author
+                    break
+                elif edit_author.upper() != 'N':
+                    edit_author = input("Enter (Y or N)")
+
+
+            edit_title = ""
+            while not (edit_title.upper() == "Y" or edit_title.upper() == "N"):
+                edit_title = input("Would you like to edit the title? (Y or N)")
+                if edit_title.upper() == 'Y':
+                    new_title = input("Enter new title: ")
+                    book.title = new_title
+                    break
+                elif edit_title.upper() != 'N':
+                    edit_title = input("Enter (Y or N)")
 
 
 

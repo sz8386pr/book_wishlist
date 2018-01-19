@@ -7,6 +7,7 @@ def display_menu_get_choice():
     '''Display choices for user, return users' selection'''
 
     print('''
+        0. Search for a book
         1. Show unread books (wishlist)
         2. Show books that have been read
         3. Mark a book as read
@@ -19,6 +20,7 @@ def display_menu_get_choice():
     choice = input('Enter your selection: ')
 
     return choice
+
 
 def sort_by():
     ''' book display sorting option '''
@@ -42,6 +44,40 @@ def sort_by():
             return "author"
         elif choice == "4":
             return "rating"
+        else:
+            message('Please enter a valid selection')
+
+
+def search_by():
+    ''' search option '''
+
+    while True:
+        print('''
+            Search by...
+            1. Book ID
+            2. Book title
+            3. Book author
+            4. Book rating
+        ''')
+
+        choice = input('Enter your selection: ')
+
+        if choice == "1":
+            value = ask_for_book_id()
+            return "id", value
+
+        elif choice == "2":
+            value = input('Enter title: ')
+            return "title", value
+
+        elif choice == "3":
+            value = input('Enter author: ')
+            return "author", value
+
+        elif choice == "4":
+            value = ask_for_book_rating()
+            return "rating", value
+
         else:
             message('Please enter a valid selection')
 
@@ -99,3 +135,18 @@ def get_new_book_info():
 def message(msg):
     '''Display a message to the user'''
     print(msg)
+
+
+def ask_for_book_rating():
+
+    ''' Ask user for book rating, validate to ensure it is a between 0-5 '''
+
+    while True:
+        try:
+            id = int(input('Enter book rating:'))
+            if id >= 0 and id <= 5:
+                return id
+            else:
+                print('Please enter a number between 0 to 5')
+        except ValueError:
+            print('Please enter an integer number')

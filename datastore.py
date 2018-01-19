@@ -47,7 +47,7 @@ def get_books(**kwargs):
 
     if 'read' in kwargs:
         read_books = [ book for book in book_list if book.read == kwargs['read'] ]
-        return read_book
+        return read_books
 
     elif 'id' in kwargs:
         search_book = [ book for book in book_list if book.id == kwargs['id'] ]

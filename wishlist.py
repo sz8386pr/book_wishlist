@@ -38,13 +38,13 @@ def search_book():
     search_option, search_value = ui.search_by()
 
     if search_option == "id":
-        search_book = datastore.get_books(id=str(search_value))
+        search_book = datastore.get_books(id=search_value)
     elif search_option == "title":
         search_book = datastore.get_books(title=str(search_value))
     elif search_option == "author":
         search_book = datastore.get_books(author=str(search_value))
     elif search_option == "rating":
-        search_book = datastore.get_books(rating=str(search_value))
+        search_book = datastore.get_books(rating=search_value)
 
     ui.show_list(search_book)
 

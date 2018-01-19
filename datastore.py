@@ -158,6 +158,24 @@ def make_output_data():
 
     return output_data
 
+def edit_book(book_id):
+    ''' edit book author and/or title by book_id '''
+
+    global book_list
+
+    for book in book_list:
+
+        if book.id == book_id:
+            print("Current book - Author: {} Title: {}\n".format(book.author, book.title))
+            edit_author = input("Would you like to edit the Author? (Y or N)")
+            if edit_author == 'Y' or 'y':
+                new_author = input("Enter new author: ")
+                book.author = new_author
+            edit_title = input("Would you like to edit the Title? (Y or N)")
+            if edit_title == 'Y' or 'y':
+                new_title = input("Enter new title: ")
+                book.title = new_title
+
 
 
 def delete_book(book_id):

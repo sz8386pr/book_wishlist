@@ -21,6 +21,9 @@ def handle_choice(choice):
     elif choice == '5':
         delete_book()
 
+    elif choice == '6':
+        edit_book()
+
     elif choice == 'q':
         quit()
 
@@ -62,6 +65,12 @@ def delete_book():
         ui.message('Successfully deleted')
     else:
         ui.message('Book id not found in database')
+
+def edit_book():
+    ''' Get book_id from user, edit book if found '''
+    book_id = ui.ask_for_book_id()
+    if datastore.edit_book(book_id):
+        ui.message('Successfully edited')
 
 def quit():
     '''Perform shutdown tasks'''

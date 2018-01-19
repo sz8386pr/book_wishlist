@@ -3,10 +3,12 @@ import json
 import os
 from book import Book
 from datetime import datetime
+import wishlistIO
 
+'''moved to io.py
 DATA_DIR = 'data'
 BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
-COUNTER_FILE_NAME = os.path.join(DATA_DIR, 'counter.txt')
+COUNTER_FILE_NAME = os.path.join(DATA_DIR, 'counter.txt')'''
 
 #separator = '^^^'  # a string probably not in any valid data relating to a book
 
@@ -18,43 +20,21 @@ def setup():
 
     global counter
 
-    try :
-        with open(BOOKS_FILE_NAME) as f:
-            # data = f.read()
-            data = json.load(f)
-            make_book_list(data)
-    except FileNotFoundError:
-        # First time program has run. Assume no books.
-        pass
+    data, counter = wishlistIO.read_files()
 
+    if data != None:
+        make_book_list(data)
 
-    try:
-        with open(COUNTER_FILE_NAME) as f:
-            try:
-                counter = int(f.read())
-            except:
-                counter = 0
-    except:
+    if counter == 0:
         counter = len(book_list)
 
 
 def shutdown():
     '''Save all data to a file - one for books, one for the current counter value, for persistent storage'''
+    global counter
 
     output_data = make_output_data()
-
-    # Create data directory
-    try:
-        os.mkdir(DATA_DIR)
-    except FileExistsError:
-        pass # Ignore - if directory exists, don't need to do anything.
-
-    with open(BOOKS_FILE_NAME, 'w') as f:
-        # f.write(output_data)
-        json.dump(output_data, f)
-
-    with open(COUNTER_FILE_NAME, 'w') as f:
-        f.write(str(counter))
+    wishlistIO.save_files(output_data, counter)
 
 
 def get_books(**kwargs):
@@ -67,8 +47,23 @@ def get_books(**kwargs):
 
     if 'read' in kwargs:
         read_books = [ book for book in book_list if book.read == kwargs['read'] ]
-        return read_books
+        return read_book
 
+    elif 'id' in kwargs:
+        search_book = [ book for book in book_list if book.id == kwargs['id'] ]
+        return search_book
+
+    elif 'title' in kwargs:
+        search_book = [ book for book in book_list if book.title == kwargs['title'] ]
+        return search_book
+
+    elif 'author' in kwargs:
+        search_book = [ book for book in book_list if book.author == kwargs['author'] ]
+        return search_book
+
+    elif 'rating' in kwargs:
+        search_book = [ book for book in book_list if book.rating == kwargs['rating'] ]
+        return search_book
 
 
 def add_book(book):

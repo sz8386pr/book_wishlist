@@ -6,7 +6,10 @@ from book import Book
 
 def handle_choice(choice):
 
-    if choice == '1':
+    if choice == '0':
+        search_book()
+
+    elif choice == '1':
         show_unread()
 
     elif choice == '2':
@@ -26,6 +29,21 @@ def handle_choice(choice):
 
     else:
         ui.message('Please enter a valid selection')
+
+
+def search_book():
+    search_option, search_value = ui.search_by()
+
+    if search_option == "id":
+        search_book = datastore.get_books(id=str(search_value))
+    elif search_option == "title":
+        search_book = datastore.get_books(title=str(search_value))
+    elif search_option == "author":
+        search_book = datastore.get_books(author=str(search_value))
+    elif search_option == "rating":
+        search_book = datastore.get_books(rating=str(search_value))
+
+    ui.show_list(search_book)
 
 
 def show_unread():

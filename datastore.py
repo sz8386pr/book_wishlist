@@ -71,8 +71,25 @@ def add_book(book):
 
     global book_list
 
+    for books in book_list:
+        if book.title == books.title and book.author == books.author and books.read == False:
+            print("Book already located and is still unread")
+            return False
+        elif book.title == books.title and book.author == books.author and books.read == True:
+            print("Book has been read, would you still like to add")
+            answer = ""
+            while not answer == "Y" or answer == "N":
+                answer = input("Enter Y or N: ")
+                if answer.upper() == "Y":
+                    book.id = generate_id()
+                    book_list.append(book)
+                    return True
+                elif answer.upper() == "N":
+                    return False
     book.id = generate_id()
     book_list.append(book)
+    return True
+
 
 
 def generate_id():

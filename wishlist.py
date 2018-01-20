@@ -73,8 +73,8 @@ def book_read():
 def new_book():
     '''Get info from user, add new book'''
     new_book = ui.get_new_book_info()
-    datastore.add_book(new_book)
-    ui.message('Book added: ' + str(new_book))
+    if datastore.add_book(new_book):
+        ui.message('Book added: ' + str(new_book))
 
 def delete_book():
     ''' Get book_id from user, delete book if found '''

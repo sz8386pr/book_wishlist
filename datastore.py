@@ -67,7 +67,7 @@ def get_books(**kwargs):
 
 
 def add_book(book):
-    ''' Add to db, set id value, return Book'''
+    ''' Check for duplicates, Add to db, set id value, return True/False '''
 
     global book_list
 

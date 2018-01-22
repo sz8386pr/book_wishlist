@@ -5,6 +5,7 @@ Book Wish List Manager
 -User can manage book wish list with this program.
 
 Program Features
+
 0. Search for a book
   User can search and sort the list of book(s) by
     -Book ID
@@ -27,6 +28,7 @@ Program Features
 
 4. Add book to wishlist
   User can add a book to wishlist by entering the book title and the book author.
+  Check to see if book is already in wish list, if read, they can re add
   Book id is automatically assigned and the book will go to the unread book list.
 
 5. Delete book from wishlist
